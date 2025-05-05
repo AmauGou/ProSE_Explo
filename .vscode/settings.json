@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "socket.h": "c"
+        "socket.h": "c",
+        "rasp_h264": "cpp",
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }

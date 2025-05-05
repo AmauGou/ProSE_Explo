@@ -1,0 +1,8 @@
+conf.ini
+.venv/
+./ven
+*.so*
+*.o
+*.a
+*.sysroot*
+a.out
