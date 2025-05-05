@@ -13,6 +13,8 @@
 #include <sys/mman.h>  // Ajout de l'en-tête pour mmap
 // =========================
 
+// Test concluant sur l'envoi d'une vidéo via un serveur mais envoi non optimisé
+
 #define PORT_TCP 8080
 #define PORT_UDP 12345
 #define BUFFER_SIZE 1024

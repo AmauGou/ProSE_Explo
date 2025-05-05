@@ -13,6 +13,8 @@
 #include <sys/mman.h>  // Ajout de l'en-tête pour mmap
 // =========================
 
+// Test d'un serveur pouvanr gérer l'UDP et le TCP au choix en utilisant Video4Linux
+
 #define PORT_TCP 8080
 #define PORT_UDP 12345
 #define BUFFER_SIZE 1024

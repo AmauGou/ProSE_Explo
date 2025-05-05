@@ -12,6 +12,8 @@
 #define PORT_UDP 12345
 #define BUFFER_SIZE 1024
 
+// Test de serveur tournant sur une Raspberry
+
 // Structure pour stocker les informations de buffer
 struct buffer {
     void *start;
