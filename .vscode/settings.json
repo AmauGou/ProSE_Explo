@@ -3,6 +3,8 @@
         "socket.h": "c",
         "rasp_h264": "cpp",
         "stdio.h": "c",
-        "stdlib.h": "c"
+        "stdlib.h": "c",
+        "stb_image.h": "c",
+        "test_2.h": "c"
     }
 }
