@@ -166,10 +166,10 @@ int main(int argc, char* argv[]) {
     gst_init(&argc, &argv);
     
     // Lister tous les périphériques vidéo disponibles
-    list_video_devices();
+    // list_video_devices();
     
     // Tester un pipeline simple
-    test_pipeline();
+    // test_pipeline();
     
     const char* video_device = "/dev/video0";
     // Vérifier si le périphérique vidéo existe
@@ -191,10 +191,10 @@ int main(int argc, char* argv[]) {
             "libcamerasrc ! tee name=t "
             // Branche 1 : pour le streaming TCP
             "t. ! queue max-size-buffers=0 max-size-bytes=0 max-size-time=1000000000 ! "
-            "video/x-raw, width=640, height=480, framerate=15/1, format=I420 ! "
+            "video/x-raw, width=640, height=480, framerate=10/1, format=I420 ! "
             "videoconvert ! "
             "x264enc tune=zerolatency byte-stream=true key-int-max=30 speed-preset=ultrafast "
-            "bitrate=500 ! "
+            "bitrate=1000 ! "
             "video/x-h264, stream-format=byte-stream, alignment=au, profile=baseline ! "
             "tcpserversink host=0.0.0.0 port=4000 "
             // Branche 2 : pour le QR code
@@ -210,10 +210,10 @@ int main(int argc, char* argv[]) {
             "libcamerasrc ! tee name=t "
             // Branche 1 : pour le streaming TCP
             "t. ! queue max-size-buffers=0 max-size-bytes=0 max-size-time=1000000000 ! "
-            "video/x-raw, width=640, height=480, framerate=15/1, format=I420 ! "
+            "video/x-raw, width=640, height=480, framerate=10/1, format=I420 ! "
             "videoconvert ! "
             "x264enc tune=zerolatency byte-stream=true key-int-max=30 speed-preset=ultrafast "
-            "bitrate=500 ! "
+            "bitrate=1000 ! "
             "video/x-h264, stream-format=byte-stream, alignment=au, profile=baseline ! "
             "tcpserversink host=0.0.0.0 port=4000 "
             // Branche 2 : pour le QR code
@@ -235,9 +235,11 @@ int main(int argc, char* argv[]) {
         g_error_free(error);
     }
 
+    /*
     g_print("Is pipeline a GstPipeline? %d\n", GST_IS_PIPELINE(pipeline));
     g_print("Is pipeline a GstBin? %d\n", GST_IS_BIN(pipeline));
-
+    */
+   
     // Récupérer et configurer l'appsink
     GstElement* appsink = gst_bin_get_by_name(GST_BIN(pipeline), "appsink");
     if (!appsink) {
@@ -246,6 +248,7 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
+    /*
     // Configuration du bus pour les messages d'erreur
     GstBus* bus = gst_element_get_bus(pipeline);
     gst_bus_add_signal_watch(bus);
@@ -254,6 +257,7 @@ int main(int argc, char* argv[]) {
     g_signal_connect(bus, "message::state-changed", G_CALLBACK(on_state_changed), pipeline);
     g_signal_connect(bus, "message::eos", G_CALLBACK(on_eos_message), NULL);
     gst_object_unref(bus);
+    */
 
     // Configuration de l'appsink avec callbacks
     GstAppSinkCallbacks callbacks = {NULL};
