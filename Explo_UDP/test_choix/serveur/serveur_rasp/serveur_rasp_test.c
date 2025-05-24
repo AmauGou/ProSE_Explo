@@ -12,7 +12,21 @@
 #define PORT_UDP 12345
 #define BUFFER_SIZE 1024
 
-// Test de serveur tournant sur une Raspberry
+// Test de serveur tournant sur une Raspberry PI 5
+
+/*
+Le but est d'envoyer une vidéo en H.264 via UDP à un client Android
+Ce serveur utilise Video4Linux pour capturer la vidéo depuis une webcam et l'envoie en utilisant des buffers mmap 
+pour une performance optimale.
+Il attend un message de démarrage du client avant de commencer l'envoi de la vidéo.
+Le client doit envoyer "START_client" pour initier la connexion.
+Le serveur envoie un message "START_serveur" pour indiquer qu'il est prêt.
+Le serveur envoie les frames vidéo en H.264 jusqu'à ce qu'il reçoive un signal de fin.
+
+Pour réaliser ce code, je me suis inspiré de documentations sur Video4Linux2 et des exemples de capture vidéo en C.
+J'ai aussi utilisé partiellement de l'IA pour vérifier la syntaxe et les appels système appropriés. 
+Pour être plus précis, cette utilisation s'est faite sur le point du cleanup et des goto, je ne connaissais pas cette manière de faire.
+*/
 
 // Structure pour stocker les informations de buffer
 struct buffer {
@@ -191,7 +205,7 @@ int main() {
     memset(&serverAddr, 0, sizeof(serverAddr));
     serverAddr.sin_family = AF_INET;
     serverAddr.sin_port = htons(PORT_UDP);
-    serverAddr.sin_addr.s_addr = INADDR_ANY; // Utiliser INADDR_ANY au lieu d'une IP spécifique
+    serverAddr.sin_addr.s_addr = INADDR_ANY; // J'ai utilisé INADDR_ANY au lieu d'une IP spécifique pour plus de flexibilité    
     
     // Bind du socket
     if (bind(sockfd, (struct sockaddr *)&serverAddr, sizeof(serverAddr)) < 0) {
