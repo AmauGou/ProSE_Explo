@@ -417,9 +417,9 @@ Ce travail exploratoire nous a permis de mieux **échanger avec les développeur
 
 ## Conclusion
 
-Notre exploration de **Video4Linux2** nous a permis de comprendre les mécanismes bas-niveau de la capture vidéo sur Linux. Cependant, son utilisation en tant qu’outil principal pour le **streaming en H.264** sur Raspberry Pi 5 a montré ses limites, notamment l'absence d’un encodeur matériel H.264 accessible via cette API.
+Notre exploration de **Video4Linux2** nous a permis de comprendre les mécanismes bas-niveau de la capture vidéo sur Linux. Cependant, son utilisation en tant qu’outil principal pour le **streaming en H.264** sur Raspberry Pi 5 a montré ses limites, notamment l'absence d’un encodeur matériel H.264 accessible via cette API. Notre exploration de **Video4Linux2** a donc pris fin à ce moment, il aurait été possible de faire le streaming en H.264 à la main mais cela aurait été trop long, trop complexe et non adapté au cadre pédagogique du Projet ProSE.
 
-Grâce à cette étude, nous avons conclu qu’une approche avec **GStreamer** est bien plus appropriée pour un projet embarqué avec contraintes de performances. Elle permet de simplifier considérablement la chaîne de traitement tout en tirant parti du matériel disponible.
+Grâce à cette étude, nous avons conclu qu’une approche avec **GStreamer** est bien plus appropriée pour un projet embarqué avec contraintes de performances. Elle permet de simplifier considérablement la chaîne de traitement tout en tirant parti du matériel disponible. Nous avons donc pu rejoindre Antoine MARTIN et Lucas BILLIEN sur leur exploration de GStreamer afin d'implémenter la vidéo pour notre projet de Prototype de Drone de Soutien. 
 
 ---
 
