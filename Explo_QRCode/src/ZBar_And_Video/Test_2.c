@@ -4,10 +4,11 @@
 #include <time.h>
 #include <stdint.h>
 #include <string.h>
-
-#define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 #include <zbar.h>
+
+#define STB_IMAGE_IMPLEMENTATION
+#define DETECTION_TIME 3.0
 
 static const char* image_path = "/tmp/cam_frame.jpg";
 
@@ -113,7 +114,7 @@ int decode_qr_from_buffer(uint8_t* gray_data, int width, int height) {
             if (current_type != NONE && current_type != UNKNOWN) {
                 if (last_entity_type != NONE &&
                     current_type != last_entity_type &&
-                    difftime(current_time, last_detection_time) <= 3.0) {
+                    difftime(current_time, last_detection_time) <= DETECTION_TIME) {
                     printf("Cas spécial : ALLY_TARGET détecté\n");
                 }
 
