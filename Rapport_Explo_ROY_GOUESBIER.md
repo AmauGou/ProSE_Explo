@@ -1,5 +1,5 @@
 
-# Exploration technique : Transmission de flux vidéo en UDP avec Video4Linux2
+# Exploration technique : Transmission de flux vidéo en UDP avec Video4Linux2 et réception sur un téléphone Android
 
 ## Auteurs
 
@@ -83,7 +83,7 @@ Suite aux échanges avec notre enseignant, nous avons opté pour les choix suiva
 
 ---
 
-# Exploration du Code : Envoi de Flux Vidéo via UDP avec V4L2
+## Exploration du Code : Envoi de Flux Vidéo via UDP avec V4L2
 
 Ce document présente une analyse détaillée du code C utilisé pour capturer un flux vidéo depuis une webcam (utilisant le driver V4L2 sur Linux) et l’envoyer via UDP à un client. Ce serveur tourne typiquement sur une Raspberry Pi.
 
