@@ -99,6 +99,8 @@ fd = open("/dev/video0", O_RDWR);
 
 Ouvre le périphérique vidéo en lecture/écriture. `/dev/video0` est  la webcam par défaut et celle que nous utilisons.
 
+---
+
 ### Configuration du format vidéo
 
 ```c
@@ -107,6 +109,8 @@ fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_H264;
 ```
 
 Configure un format vidéo en H.264, ce qui est plus efficace pour la transmission réseau car ce format est compressé.
+
+---
 
 ### Allocation et mappage mémoire des buffers
 
@@ -118,11 +122,14 @@ ioctl(fd, VIDIOC_REQBUFS, &req);
 
 Demande au driver V4L2 d’allouer 4 buffers pour le streaming.
 
+
 Ensuite, chaque buffer est mappé avec `mmap` pour un accès rapide :
 
 ```c
 buffers[n_buffers].start = mmap(NULL, buf.length, PROT_READ | PROT_WRITE, MAP_SHARED, fd, buf.m.offset);
 ```
+
+---
 
 ### Mise en file d’attente et démarrage du streaming
 
