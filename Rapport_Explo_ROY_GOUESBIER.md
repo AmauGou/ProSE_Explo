@@ -108,6 +108,7 @@ fmt.type = V4L2_BUF_TYPE_VIDEO_CAPTURE;
 fmt.fmt.pix.pixelformat = V4L2_PIX_FMT_H264;
 ```
 
+
 Configure un format vidéo en H.264, ce qui est plus efficace pour la transmission réseau car ce format est compressé.
 
 ---
@@ -201,7 +202,7 @@ if (strncmp(buffer, "START_client", 12) == 0) {
 
 ## ✅ Résumé
 
-Ce serveur UDP pour Raspberry Pi :
+Ce serveur UDP pour Raspberry PI :
 
 * Utilise V4L2 pour capturer un flux vidéo en H.264
 * Gère des buffers mappés en mémoire pour la performance
