@@ -85,7 +85,7 @@ Suite aux échanges avec notre enseignant, nous avons opté pour les choix suiva
 
 ## Exploration du Code : Envoi de Flux Vidéo via UDP avec V4L2
 
-Ce document présente une analyse détaillée du code C utilisé pour capturer un flux vidéo depuis une webcam (utilisant le driver V4L2 sur Linux) et l’envoyer via UDP à un client. Ce serveur tourne typiquement sur une Raspberry Pi.
+Cette partie présente une analyse du code C utilisé pour capturer un flux vidéo depuis une webcam en utilisant V4L2 et l’envoyer via UDP à un client. Le serveur tourne également sur la Raspberry Pi.
 
 ---
 
@@ -169,7 +169,7 @@ while (1) {
 sendto(sockfd, "END", 3, 0, (struct sockaddr *)&clientAddr, addr_size);
 ```
 
-Permet d'indiquer au client que la vidéo est terminée.
+On envoit "END" afin d'indiquer au client (dans notre cas l'Android)que la vidéo est terminée.
 
 Puis on arrête le flux vidéo et on libère les ressources :
 
@@ -211,14 +211,14 @@ Ce serveur UDP pour Raspberry PI :
 
 ---
 
-Pour une communication fiable, on peut envisager une migration vers TCP ou l’utilisation de protocoles spécifiques à la vidéo (RTP/RTSP).
+Pour une communication fiable, on peut envisager une migration vers TCP ou l’utilisation de protocoles spécifiques à la vidéo (RTP/RTSP). Dans la suite de notre projet, nous nous sommes finalement dirigés vers une communication via TCP.
 
 
 ## Problèmes rencontrés : l’encodage H.264 sur Raspberry Pi 5
 
 Un obstacle majeur a été découvert au cours de notre expérimentation : **la Raspberry Pi 5 ne dispose pas nativement d’un encodeur H.264 via V4L2**.
 
-En effet, notre Raspberry Pi 5 utilise un GPU VideoCore VII, mais l'accès à l'encodage matériel (H.264) est limité. En effet, V4L2 ne propose pas de périphérique `/dev/video*` correspondant à un encodeur matériel H.264 par défaut. Il faut donc passer par **GStreamer** par exemple ou via des bibliothèques tierces comme **libcamera** avec un pipeline plus complexe.
+En effet, notre Raspberry Pi 5 utilise un GPU VideoCore VII, mais l'accès à l'encodage matériel (H.264) est limité. V4L2 ne propose pas de périphérique `/dev/video*` correspondant à un encodeur matériel H.264 par défaut. Il faut donc passer par **GStreamer** par exemple ou via des bibliothèques tierces comme **libcamera** avec un pipeline plus complexe.
 
 Dans le cadre de notre projet ProSE cela signifie que :
 - V4L2 seul ne suffit pas pour capturer et encoder en H.264.
@@ -395,7 +395,7 @@ Notre implémentation actuelle nous a permis de mieux comprendre les limites du 
   La vidéo n’est lisible **qu’à la fin de la réception**. Pour une lecture **en continu**, il aurait fallu utiliser une solution comme **ExoPlayer** avec un `custom DataSource`, ou une intégration bas-niveau avec **ffmpeg + SurfaceView**.
 
 - **Pas de correction de pertes UDP** :  
-  UDP ne garantit pas la livraison des paquets. Les pertes peuvent donc rendre le fichier **partiellement illisible** ou provoquer des erreurs de décodage.
+  UDP ne garantit pas la livraison des paquets. Les pertes peuvent donc rendre le fichier **partiellement illisible** ou provoquer des erreurs de décodage. TCP est donc mieux adapté dans notre cas.
 
 - **Pas de gestion de l’ordre des paquets** :  
   Les paquets sont écrits directement dans le fichier sans tri ni vérification de leur ordre d’arrivée, ce qui est risqué avec UDP.
