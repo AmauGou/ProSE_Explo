@@ -4,11 +4,9 @@
 #include <time.h>
 #include <stdint.h>
 #include <string.h>
-#include "stb_image.h"
 #include <zbar.h>
 #include "Decode_QR.h"
 
-#define STB_IMAGE_IMPLEMENTATION
 #define DETECTION_TIME 3.0
 
 static const char* image_path = "/tmp/cam_frame.jpg";
