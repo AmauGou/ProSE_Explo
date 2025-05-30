@@ -1,4 +1,4 @@
-#include "Test_2.h"
+#include "Decode_QR.h"
 
 #include <gst/gst.h>
 #include <gst/app/gstappsink.h>
@@ -8,6 +8,11 @@
 #include <stdint.h>
 #include <string.h>
 #include <unistd.h>
+
+// Ce programme utilise GStreamer pour capturer des frames vidéo et ZBar pour analyser les QR codes.
+// J'ai réussi à construire ce pipeline grâce à Adrian de l'équipe Kereval qui m'a epxliqué les grands principes
+// Puis nous avons pu construire notre propre pipeline avec deux flux vidéos différents
+
 
 // Variable globale pour le main loop
 GMainLoop* loop = NULL;
@@ -137,7 +142,7 @@ static void list_video_devices() {
     }
 }
 
-// Fonction pour tester simplement le pipeline
+// Fonction pour tester simplement le pipeline et vérifier son lancement
 static void test_pipeline() {
     GError* error = NULL;
     g_print("Testing simple pipeline with fakesink...\n");
@@ -234,11 +239,6 @@ int main(int argc, char* argv[]) {
         g_print("Failed to create pipeline: %s\n", error->message);
         g_error_free(error);
     }
-
-    /*
-    g_print("Is pipeline a GstPipeline? %d\n", GST_IS_PIPELINE(pipeline));
-    g_print("Is pipeline a GstBin? %d\n", GST_IS_BIN(pipeline));
-    */
    
     // Récupérer et configurer l'appsink
     GstElement* appsink = gst_bin_get_by_name(GST_BIN(pipeline), "appsink");
@@ -248,7 +248,8 @@ int main(int argc, char* argv[]) {
         return -1;
     }
 
-    /*
+    /* J'ai désactivé les messages d'erreur et avertissements pour éviter les logs inutiles
+    
     // Configuration du bus pour les messages d'erreur
     GstBus* bus = gst_element_get_bus(pipeline);
     gst_bus_add_signal_watch(bus);
