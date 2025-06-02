@@ -46,6 +46,17 @@ EntityType get_entity_type(const char* id) {
     return UNKNOWN;
 }
 
+void capture_image_to_file(const char* filename) {
+    char cmd[256];
+    snprintf(cmd, sizeof(cmd), "libcamera-jpeg -o %s --width 640 --height 480", filename);
+    int ret = system(cmd);
+    if (ret != 0) {
+        fprintf(stderr, "Erreur lors de la capture de l'image\n");
+    } else {
+        printf("Image capturée : %s\n", filename);
+    }
+}
+
 // Fonction pour décoder les QR codes à partir d'une image en niveaux de gris
 int decode_qr_from_buffer(uint8_t* gray_data, int width, int height) {
     // Création d'un scanner ZBar pour la détection de QR codes
@@ -79,6 +90,9 @@ int decode_qr_from_buffer(uint8_t* gray_data, int width, int height) {
             // Extraction des données du symbole (chaîne de caractères contenue dans le QR code)
             const char* data = zbar_symbol_get_data(symbol);
             printf("QR Code détecté : %s\n", data);
+
+            // Capture de l’image dès qu’un QR code est détecté 
+            capture_image_to_file("/tmp/capture.jpg");
 
             // Identification du type d'entité représentée par le QR code
             EntityType current_type = get_entity_type(data);
